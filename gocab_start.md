@@ -8,4 +8,10 @@ The rise of [crime](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&c
 * a seamless, user-friendly experience
 * the possibility to constantly monitor during the ride the real cost + a complete breakdown of the different taxes and surcharges (airport pickup surcharge, after 10pm surcharge... that are always added at the end of the ride and no one ever knows what they really are and how much)
 * automatically tip a certain percentage of the trip cost at every ride
-* when no cab is available nearby (which, by personal experience, really really sucks)
+* when no cab is available nearby (which, by personal experience, really, really sucks), the possibility to call a local taxi company to order a cab. 
+
+## What this repository includes
+
+Because this is only a work-in-progress with no legal status yet, everything provided in this repository, including the present document, is provided open-source and everyone is free to contribute to it. Please note that goCab is a trademark registered in France. 
+
+The repository will include the Swift code for the iOS app alongside some other technical documents, including visual mockups, UML documents, charts... 
