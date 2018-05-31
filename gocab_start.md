@@ -9,6 +9,8 @@ The rise of [crime](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&c
 * the possibility to constantly monitor during the ride the real cost + a complete breakdown of the different taxes and surcharges (airport pickup surcharge, after 10pm surcharge... that are always added at the end of the ride and no one ever knows what they really are and how much)
 * automatically tip a certain percentage of the trip cost at every ride
 * when no cab is available nearby (which, by personal experience, really, really sucks), the possibility to call a local taxi company to order a cab. 
+* many payment options, including cash, with the possibility to tip more afterwards, in addition to the automatic tip
+* a system of points and badges to encourage the use of the app and its sharing with friends and family
 
 ## What this repository includes
 
