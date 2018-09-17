@@ -13,9 +13,9 @@ require_once 'get_id.php';
 $response = array();
 
 $servername = "localhost";
-$username = "sakrtt7d_pougala";
-$password = "Tarabiscotta1";
-$dbname = "goCab2";
+$username = "xxxx";
+$password = "xxxx";
+$dbname = "goCab";
 
 // create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
