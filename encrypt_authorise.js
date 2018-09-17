@@ -18,8 +18,8 @@ app.get("/payment/:card/", (req, res) => {
 
         const apiUrl = 'pal-test.adyen.com';
         const pathUrl = '/pal/servlet/Payment/v30/authorise';
-        const user = 'ws@Company.GoCabAccount132';
-        const pass = 'u<*JM3&>HB+y6f[f]sAH+>6hf';
+        const user = 'xxx';
+        const pass = 'xxx';
         const auth = 'Basic ' + new Buffer(user + ':' + pass).toString('base64');
 
         const data = {
