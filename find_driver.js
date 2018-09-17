@@ -10,6 +10,10 @@ const fs = require('fs');
 const compare = require('3');
 const traverse = require('traverse');
 
+// This Node.JS module serves as an Uber-style driver allocation service whenever the user hires a cab from the app. It takes
+// the user's pickup location as coordinates, computes the distance to all available drivers and sorts them before individually
+// sending them a ride proposition via Pusher which they can either accept or decline. 
+
 var number_rows = 0;
 
 var array_result = {};
@@ -19,8 +23,8 @@ var Pusher = require('pusher');
 
 var pusher = new Pusher({
     appId: '585736',
-    key: 'df113cf19226ea7d8c4a',
-    secret: '211539f9387565944ed9',
+    key: 'xxx',
+    secret: 'yyy',
     cluster: 'eu',
     encrypted: true
 });
@@ -35,15 +39,17 @@ app.get("/drivers/:id/:latitude/:longitude", (req, res) => {
 
     const connection = mysql.createConnection({
         host: "localhost",
-        user: "sakrtt7d_pougala",
-        password: "Tarabiscotta1",
-        database: "goCab2"
+        user: "xxx",
+        password: "xxx",
+        database: "goCab"
     });
 
     console.time("getDrivers");
     connection.connect(function (err) {
         if (err) throw err;
         console.time("db-query");
+        
+        // get all available drivers from SQL database
         const array = connection.query("SELECT driver_id, longitude, latitude FROM drivers", function (err, result, fields) {
             if (err) throw err;
             array_result = result;
@@ -74,20 +80,6 @@ app.get("/drivers/:id/:latitude/:longitude", (req, res) => {
             };
 
 
-            /*var m = 0;
-            const sendToDrivers = function(results, callback) {
-                var newBooking = {};
-                function iterate() {
-                    const y = data[m++];
-                    if(!y) {
-                        return callback(null, newBooking);
-                    } else {
-
-                    }
-                }
-            }*/
-
-
             getDrivers(array_result, (err, data) => {
                 console.time("timeToSortDrivers");
 
@@ -99,26 +91,6 @@ app.get("/drivers/:id/:latitude/:longitude", (req, res) => {
 
                 // Wait for the drivers map to be sorted before calling
                 setTimeout(sendToDrivers, 30, sortedDrivers);
-
-
-                //});
-                /*or(var key in sortedDrivers) {
-
-                    // ask to each driver individually
-                    console.time("sendBooking");
-                    const i = getUser(result, key);
-                    const lon = array_result[i].longitude;
-                    const lat = array_result[i].latitude;
-
-                        const newBooking = {
-                            distance: sortedDrivers.get(key).distance,
-                            time_to_origin: sortedDrivers.get(key).time,
-                            rating:4
-                        };
-                        console.log("newBooking: ", newBooking);
-                        pusher.trigger('drivers','new-user', {message:newBooking});
-                        console.timeEnd("sendBooking");
-                    };*/
 
 
             });
@@ -135,7 +107,7 @@ app.get("/drivers/:id/:latitude/:longitude", (req, res) => {
 
         for(const key of sortedMap) {
             // for each key of the map, we create a new booking message including distance from driver to pick-up location,
-            // eta and the rating of the user and sent it as a message to each individual driver via Pusher Channels.
+            // eta and the rating of the user and send it as a message to each individual driver via Pusher Channels.
 
             console.time("sendBooking");
 
@@ -165,7 +137,6 @@ function getUser(results, id) {
     // really not efficient
     for (var i = 0; i < results.length; i++) {
         console.log("It entered the loop");
-        if (results[i].driver_id === id) {
             return results[i];
         }
     }
@@ -179,7 +150,7 @@ function degreesToRadians(degrees) {
 function getMapQuestDistance(longitude1, latitude1, longitude2, latitude2, callback) {
     // calls the MapQuest Route API to get duration and distance info
     var body = '';
-    https.get(`https://www.mapquestapi.com/directions/v2/route?key=VJtpFCP5ZOpMAymke0ZKRGGliMUonPd4&from=
+    https.get(`https://www.mapquestapi.com/directions/v2/route?key=KEY&from=
     ${latitude1},${longitude1}&to=${latitude2},${longitude2}`, (resp) => {
         resp.setEncoding('utf8');
         resp.on('data', (chunk) => {
@@ -199,6 +170,7 @@ function getMapQuestDistance(longitude1, latitude1, longitude2, latitude2, callb
     });
 }
 function computeDistance(longitude1, latitude1, longitude2, latitude2) {
+    // this function computes Eucledian distance between two points on Earth although I'm not sure whether to use it or not.
     const earthRadiusKm = 6371;
 
     var dLat = degreesToRadians(latitude2-latitude1);
@@ -217,6 +189,7 @@ function mapToJson(map) {
     return JSON.stringify([...map]);
 }
 
+// create a secure connection to the server
 var privateKey = fs.readFileSync('key.pem').toString();
 var certificate = fs.readFileSync('server.crt').toString();
 
