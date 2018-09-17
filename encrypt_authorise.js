@@ -6,8 +6,8 @@ const querystring = require('querystring');
 const https = require('https');
 const fs = require('fs');
 
-//var credentials = {key: fs.readFileSync('key.pem').toString(), cert: fs.readFileSync('3c894b35c5b682f9.crt').toString()};
-
+// This module is the backend for Adyen iOS SDK: a user inputs credit card information that's encrypted in the app then sent through 
+// a secure connection to this server before authenticating to Adyen's service in order to authorise a payment.
 
 app.get("/payment/:card/", (req, res) => {
     const card_encrypted_json = req.params.card;
@@ -38,7 +38,7 @@ app.get("/payment/:card/", (req, res) => {
             //         "street": street
             //     },
             "reference": generateOrderNumber(),
-            "merchantAccount": "GoCabAPP",
+            "merchantAccount": "xxx",
             "origin": req.url
         }
 
@@ -88,7 +88,6 @@ app.get("/payment/:card/", (req, res) => {
         newRequest.end();
 
 
-   // res.end("End of the line, people.");
 
 
 });
@@ -112,6 +111,5 @@ var certificate = fs.readFileSync('server.crt').toString();
 https.createServer({
     key: privateKey,
     cert: certificate,
-    //ca: [fs.readFileSync('cr1.crt'), fs.readFileSync('cr2.crt'), fs.readFileSync('cr3.crt')]
 
 }, app).listen(808);
